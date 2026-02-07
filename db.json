@@ -1,0 +1,28 @@
+{
+    "employees": [
+        {
+            "id": 1,
+            "fullname": "Martin short",
+            "position": "Developer",
+            "age": 80
+        },
+        {
+            "id": 2,
+            "fullname": "John Doe",
+            "position": "Designer",
+            "age": 40
+        },
+        {
+            "id": 3,
+            "fullname": "Bob Smith",
+            "position": "Designer",
+            "age": 50
+        },
+        {
+            "id": 4,
+            "fullname": "Alice Johnson",
+            "position": "Developer",
+            "age": 30
+        }
+    ]
+}
