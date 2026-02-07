@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 
@@ -17,6 +19,9 @@ const EmployeeDetailsPage = async ({params}: {params: Promise<{id: string}>}) =>
             <div>{data.fullname}</div>
             <div>{data.position}</div>
             <div>{data.age}</div>
+            <Button asChild>
+                <Link href={`/form/edit/${id}`}>Edit</Link>
+            </Button>
         </div>
     );
 };
