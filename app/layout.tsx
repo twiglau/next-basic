@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Anton } from "next/font/google";
 import "./globals.css";
 import NaviBar from "@/components/Navibar";
+import AuthProvider from "@/providers/auth";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -35,10 +36,12 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${anton.variable} antialiased mx-auto`}
       >
-        <NaviBar />
-        <div className="container mx-auto">
-          {children}
-        </div>
+        <AuthProvider>
+          <NaviBar />
+          <div className="container mx-auto">
+            {children}
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

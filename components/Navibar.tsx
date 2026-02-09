@@ -16,6 +16,12 @@ const NaviBar = () => {
                     <DropdownMenuContent align="end" side="bottom">
                         <DropdownMenuGroup>
                             <DropdownMenuLabel>账户</DropdownMenuLabel>
+                            <DropdownMenuItem>
+                                <Link href="/dashboard">Dashboard</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href="/posts">Posts</Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem>登录</DropdownMenuItem>
                             <DropdownMenuItem>注册</DropdownMenuItem>
                         </DropdownMenuGroup>
