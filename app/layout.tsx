@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto, Anton } from "next/font/google";
 import "./globals.css";
 import NaviBar from "@/components/Navibar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const roboto = Roboto({
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+
+const anton = Anton({
+  weight: ["400"],
+  style: ["normal"],
   subsets: ["latin"],
+  display: "swap",
+  variable: "--font-anton",
 });
 
 export const metadata: Metadata = {
@@ -26,10 +33,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased container mx-auto`}
+        className={`${roboto.variable} ${anton.variable} antialiased mx-auto`}
       >
         <NaviBar />
-        {children}
+        <div className="container mx-auto">
+          {children}
+        </div>
       </body>
     </html>
   );

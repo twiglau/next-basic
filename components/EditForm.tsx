@@ -8,8 +8,23 @@ import { FieldGroup, FieldLabel,Field, FieldError } from "./ui/field";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import type { Employee } from "@/types/Employees";
+import { editEmployee } from "@/utils/actions";
 
 const EditForm = ({employee}: {employee: Employee}) => {
+
+    const [isPending, startTransition] = React.useTransition();
+    const [error, setError ] = React.useState<string | null>(null);
+
+
+    const handleSubmit = async (values: Employee) => {
+        startTransition( () => {
+            editEmployee(values.id, values).catch((editError) => {  
+                if(editError) {
+                    setError(editError.message || "Failed to edit employee")
+                }
+            })
+        })
+    }
     const formik = useFormik<Employee>({
         initialValues: {
             id: employee.id,
@@ -23,7 +38,7 @@ const EditForm = ({employee}: {employee: Employee}) => {
             age: Yup.number().required("Required"),
         }),
         onSubmit: (values) => {
-            console.log(values);
+            handleSubmit(values)
         },
     });
     return (
@@ -73,7 +88,10 @@ const EditForm = ({employee}: {employee: Employee}) => {
                         ) : null}
                     </Field>
                 </FieldGroup>
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isPending}>Submit</Button>
+                {error && (
+                   <FieldError>{error}</FieldError>
+                )}
             </form>
         </div>
     );
