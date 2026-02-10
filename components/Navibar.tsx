@@ -1,9 +1,11 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { getServerSession } from "@/server/auth"
 
 
-const NaviBar = () => {
+const NaviBar = async () => {
+    const session = await getServerSession()
     return (
         <div className="container py-5 border-b border-gray-200 mx-auto flex items-center justify-between">
             <div className="font-anton">Admin</div>
@@ -15,19 +17,26 @@ const NaviBar = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" side="bottom">
                         <DropdownMenuGroup>
-                            <DropdownMenuLabel>账户</DropdownMenuLabel>
-                            <DropdownMenuItem>
-                                <Link href="/dashboard">Dashboard</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href="/posts">Posts</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href={"/login?type=login"}>登录</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href={"/login?type=register"}>注册</Link>
-                            </DropdownMenuItem>
+                            {session ? (
+                                <>
+                                    <DropdownMenuItem>
+                                        <Link href="/dashboard">Dashboard</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Link href="/dashboard/event">活动管理</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Link href="/dashboard/venue">场地管理</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Link href="/api/auth/signout">退出登录</Link>
+                                    </DropdownMenuItem>
+                                </>
+                            ) : (
+                                <DropdownMenuItem>
+                                    <Link href="/login?type=login">登录/注册</Link>
+                                </DropdownMenuItem>
+                            )}
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
