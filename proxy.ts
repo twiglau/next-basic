@@ -13,5 +13,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/profile/:path*"], // Protect these routes
+  matcher: ["/dashboard/:path*"], // Protect these routes
 };
