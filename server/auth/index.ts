@@ -3,6 +3,8 @@ import {
   getServerSession as nextAuthGetServerSession,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { connectionDb, User } from "../db";
+import { comparePassword } from "@/utils/utils";
 
 const authOptions: AuthOptions = {
   providers: [
@@ -21,24 +23,46 @@ const authOptions: AuthOptions = {
         },
       },
       async authorize(credentials) {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
-        // Here you would typically fetch the user from your database
-        // and verify the password. For demonstration, we'll use a hardcoded user.
-        const user = {
-          id: "1",
-          name: "John Doe",
-          email: "john.doe@example.com",
-        };
-        if (email === user.email && password === "password123") {
-          return user;
+        await connectionDb();
+        const user = await User.findOne({ email: credentials?.email });
+        if (!user) {
+          return null;
         }
-        return null;
+
+        const isMatch = await comparePassword(
+          credentials?.password || "",
+          user.password,
+        );
+        if (!isMatch) {
+          return null;
+        }
+
+        return user;
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        (session.user as any).id = token.id;
+      }
+      return session;
+    },
+  },
+  pages: {
+    signIn: "/login",
+  },
+  theme: {
+    colorScheme: "light",
+    brandColor: "blue",
+  },
 };
 
 function getServerSession() {

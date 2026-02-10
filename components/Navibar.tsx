@@ -22,8 +22,12 @@ const NaviBar = () => {
                             <DropdownMenuItem>
                                 <Link href="/posts">Posts</Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>登录</DropdownMenuItem>
-                            <DropdownMenuItem>注册</DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href={"/login?type=login"}>登录</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href={"/login?type=register"}>注册</Link>
+                            </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
