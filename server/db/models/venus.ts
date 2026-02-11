@@ -38,6 +38,7 @@ export type VenusType = Omit<
   mongoose.InferSchemaType<typeof venusSchema>,
   "stateId"
 > & {
+  id: string;
   stateId: string;
 };
 

@@ -1,10 +1,79 @@
 "use server";
 
-import { connectionDb, Venus, States } from "@/server/db";
+import {
+  connectionDb,
+  Venus,
+  States,
+  VenusType,
+  StatesType,
+} from "@/server/db";
 import { Employee } from "@/types/Employees";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { schemeValidate } from "@/app/dashboard/venue/validate";
+import { EventsType, Events } from "@/server/db/models/events";
+
+export async function addEvent(
+  values: Omit<EventsType, "createdAt" | "updatedAt">,
+) {
+  try {
+    // 2. 连接数据库
+    await connectionDb();
+
+    // 3. 创建场馆
+    const newEvent = new Events({ ...values });
+    await newEvent.save();
+
+    return {
+      success: true,
+      message: "Event added successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || "Failed to add event",
+    };
+  }
+}
+
+export type VenueActionType = Omit<
+  VenusType,
+  "stateId" | "createdAt" | "updatedAt"
+> & {
+  state: Omit<StatesType, "_id" | "createdAt" | "updatedAt"> | null;
+};
+export async function getVenus(): Promise<VenueActionType[]> {
+  try {
+    await connectionDb();
+    const venues = await Venus.find({})
+      .populate("stateId", "name code") // 关联查询 state 信息
+      .select("_id name address stateId")
+      .lean();
+
+    return venues.map((venue) => {
+      const stateId = venue.stateId as {
+        _id: string;
+        name: string;
+        code: string;
+      } | null;
+      return {
+        id: venue._id.toString(),
+        name: venue.name,
+        address: venue.address,
+        state: stateId
+          ? {
+              id: stateId._id.toString(),
+              name: stateId.name,
+              code: stateId.code,
+            }
+          : null,
+      };
+    });
+  } catch (error) {
+    console.error("Failed to fetch venues:", error);
+    return [];
+  }
+}
 
 export async function getStates() {
   try {

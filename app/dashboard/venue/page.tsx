@@ -18,8 +18,8 @@ const VenuePage = () => {
     }, []);
 
     return (
-        <div className="max-w-md mx-auto">
-            <form className="flex flex-col gap-3" action={action}>
+        <div className="">
+            <form className="flex flex-col gap-3 max-w-md mx-auto" action={action}>
                 <Field>
                     <FieldLabel>名称</FieldLabel>
                     <Input name='name' />
@@ -30,7 +30,7 @@ const VenuePage = () => {
                 </Field>
                 <Field>
                     <FieldLabel>州</FieldLabel>
-                    <Select value={selectedStateId} onValueChange={setSelectedStateId}>
+                    <Select value={selectedStateId} name="stateId" onValueChange={setSelectedStateId}>
                         <SelectTrigger>
                             <SelectValue placeholder="请选择州" />
                         </SelectTrigger>
@@ -45,7 +45,7 @@ const VenuePage = () => {
                         </SelectContent>
                     </Select>
                     {/* Hidden input to submit the selected state ID */}
-                    <input type="hidden" name="stateId" value={selectedStateId} />
+                    {/* <input type="hidden" name="stateId" value={selectedStateId} /> */}
                 </Field>
                 <Button className="w-full mt-5" type='submit' disabled={isPending}>
                     {isPending ? '提交中...' : '提交'}
