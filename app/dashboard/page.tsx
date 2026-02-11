@@ -1,7 +1,11 @@
 
+import EventListComponent from "@/components/EventList";
+import { getEvents } from "@/utils/actions";
 import Image from "next/image";
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+
+  const events = await getEvents(10, 0);
   return (
     <div>
       <div className="relative w-full h-auto aspect-4/1">
@@ -15,6 +19,7 @@ const DashboardPage = () => {
           Rocking hard since 1984
         </div>
       </div>
+      <EventListComponent events={events}  />
     </div>
   );
 };
