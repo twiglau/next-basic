@@ -3,6 +3,7 @@ import { Roboto, Anton } from "next/font/google";
 import "./globals.css";
 import NaviBar from "@/components/Navibar";
 import AuthProvider from "@/providers/auth";
+import { ToastContainer } from "react-toastify";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -42,6 +43,7 @@ export default function RootLayout({
             {children}
           </div>
         </AuthProvider>
+        <ToastContainer />
       </body>
     </html>
   );

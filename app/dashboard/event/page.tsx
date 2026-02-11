@@ -49,7 +49,6 @@ const EventPage = () => {
             slug: Yup.string().required("Slug is required"),
         }),
         onSubmit: (values) => {
-            console.log("Submitting values:", values);
             handleSubmit(values);
         }
     });
