@@ -51,7 +51,9 @@ const EventPage = () => {
             console.log("Submitting values:", values);
             handleSubmit(values);
         }
-    })
+    });
+
+    const { setFieldValue } = formik;
 
 
     React.useEffect(() => {
@@ -62,9 +64,9 @@ const EventPage = () => {
         if (date && dateTime) {
             const formattedDate = format(date, "yyyy-MM-dd");
             const formattedDateTime = `${formattedDate} ${dateTime}`;
-            formik.setFieldValue("date", formattedDateTime, false);
+            setFieldValue("date", formattedDateTime, false);
         }
-    }, [date, dateTime]);
+    }, [date, dateTime, setFieldValue]);
 
 
     const handleSubmit = async (values: Omit<EventsType, "createdAt"|"updatedAt">) => {
