@@ -21,6 +21,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { ChevronDownIcon } from "lucide-react";
 import { format } from "date-fns";
 import { addEvent } from "@/utils/actions";
+import { Spinner } from "@/components/ui/spinner";
 
 
 const EventPage = () => {
@@ -172,7 +173,8 @@ const EventPage = () => {
                     </Field>
                 </FieldGroup>
                 <Button className="w-full mt-5" type='submit' disabled={isPending}>
-                    {isPending ? '提交中...' : '提交'}
+                    { isPending? <Spinner /> : null  }
+                    { isPending ? '提交中...' : '提交' }
                 </Button>
                 {error && <p className="text-red-500">{error}</p>}
             </form>
