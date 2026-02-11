@@ -13,6 +13,44 @@ import { redirect } from "next/navigation";
 import { schemeValidate } from "@/app/dashboard/venue/validate";
 import { EventsType, Events } from "@/server/db/models/events";
 
+export async function getEvents(limit: number = 10, skip: number = 0) {
+  try {
+    await connectionDb();
+    const events = await Events.find({})
+      .populate({
+        path: "venueId",
+        model: Venus,
+        populate: {
+          path: "stateId",
+          model: States,
+        },
+      })
+      .limit(limit)
+      .skip(skip)
+      .sort({ date: -1 });
+
+    return events.map((event) => ({
+      id: event._id.toString(),
+      artist: event.artist,
+      description: event.description,
+      date: event.date,
+      venue: {
+        id: event.venueId._id.toString(),
+        name: event.venueId.name,
+        address: event.venueId.address,
+        state: {
+          id: event.venueId.stateId._id.toString(),
+          name: event.venueId.stateId.name,
+          code: event.venueId.stateId.code,
+        },
+      },
+    }));
+  } catch (error) {
+    console.error("Failed to fetch events:", error);
+    return [];
+  }
+}
+
 export async function addEvent(
   values: Omit<EventsType, "createdAt" | "updatedAt">,
 ) {

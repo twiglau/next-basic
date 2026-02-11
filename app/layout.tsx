@@ -39,7 +39,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <NaviBar />
-          <div className="container mx-auto">
+          <div className="w-full">
             {children}
           </div>
         </AuthProvider>
