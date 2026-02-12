@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 
 const roboto = Roboto({
   weight: ["400", "700"],
-  style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-roboto",
@@ -15,8 +14,7 @@ const roboto = Roboto({
 
 
 const anton = Anton({
-  weight: ["400"],
-  style: ["normal"],
+  weight: "400",
   subsets: ["latin"],
   display: "swap",
   variable: "--font-anton",

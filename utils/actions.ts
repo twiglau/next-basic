@@ -11,6 +11,7 @@ import { Employee } from "@/types/Employees";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { schemeValidate } from "@/app/dashboard/venue/validate";
+import { format } from "date-fns";
 import { EventsType, Events } from "@/server/db/models/events";
 
 export async function getEvents(limit: number = 10, skip: number = 0) {
@@ -33,7 +34,7 @@ export async function getEvents(limit: number = 10, skip: number = 0) {
       id: event._id.toString(),
       artist: event.artist,
       description: event.description,
-      date: event.date,
+      date: format(event.date, "MMM dd, yyyy"),
       venue: {
         id: event.venueId._id.toString(),
         name: event.venueId.name,

@@ -1,7 +1,6 @@
 "use client";
 
 import Masonry from 'react-masonry-css';
-import { format } from 'date-fns';
 import { CardAction, CardFooter } from './ui/card';
 import { Card, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -15,6 +14,10 @@ const breakpointColumnsObj = {
   500: 1
 };
 
+const randomHeight = (index: number) => {
+    const heights = [200, 300];
+    return heights[index % heights.length];
+}
 
 
 const EventListComponent = ({events}: {events: any[]}) => {
@@ -26,28 +29,20 @@ const EventListComponent = ({events}: {events: any[]}) => {
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column"
             >
-                {events.map((event) => (
-                    <Card key={event.id} className="relative mx-auto w-full max-w-sm pt-0">
-                        <div className='relative'>
-                            <Image
-                                src={`https://picsum.photos/200/300`}
-                                alt="Event cover"
-                                className="object-cover hover:scale-110 transition duration-300"
-                                width={200}
-                                height={300}
-                            />
-                        </div>
-                        <CardHeader>    
-                            <CardAction>
-                                <Badge variant="outline">{format(new Date(event.date), 'MMM dd, yyyy')}</Badge>
-                            </CardAction>
-                            <CardTitle>{event.venue.name}</CardTitle>
-                            <CardDescription>
-                               {event.description}
-                            </CardDescription>
+                {events.map((event, index) => (
+                    <Card key={event.id} className="relative overflow-hidden mx-auto w-full max-w-sm pt-0" style={{height: randomHeight(index)}}>
+                        <Image
+                            src={`https://picsum.photos/200/${randomHeight(index)}?${index}`}
+                            alt="Event cover"
+                            fill
+                            className="inset-0 object-cover hover:scale-110 transition duration-300"
+                        />
+                        <CardHeader className='absolute top-0 left-0 right-0 z-10 bg-black/50 py-3 flex items-center justify-between'>   
+                            <p className='text-white'>{event.artist}</p> 
+                            <Badge variant="outline" className='text-white bg-transparent border-white'>{event.date}</Badge>
                         </CardHeader>
-                        <CardFooter>
-                            <Button className="w-full">View Event</Button>
+                        <CardFooter className='absolute bottom-0 left-0 right-0 z-10 py-3 bg-black/50'>
+                            <Button variant="outline">View Event</Button>
                         </CardFooter>
                     </Card>
                 ))}

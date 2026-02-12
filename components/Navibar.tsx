@@ -10,7 +10,28 @@ const NaviBar = async () => {
         <div className="container py-5 border-b border-gray-200 mx-auto flex items-center justify-between">
             <div className="font-anton">Admin</div>
 
-            <div className="shrink-0">
+            <div className="shrink-0 flex gap-2 justify-end items-center">
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Test</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" side="bottom">
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem>
+                                <Link href="/render">静态，动态渲染</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href="/data">数据获取</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href="/cache">四种缓存</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href="/news">客户端路由缓存</Link>
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline">Menu</Button>
