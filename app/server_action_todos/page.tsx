@@ -1,7 +1,8 @@
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { addTodo, getTodo } from "@/utils/actions";
 import ClientButton from "@/components/ClientButton";
+import SubmitButton from "@/components/SubmitButton";
+import SubmitForm from "@/components/SubmitForm";
 
 export default async function ServerActionTodosPage() {
     const todos = await getTodo()
@@ -31,7 +32,7 @@ export default async function ServerActionTodosPage() {
     <div className="flex items-center">
         <form action={addTodoWithUserId2}>
             <Input type="text" name="todo" />
-            <Button type="submit" className="ml-2">Add</Button>
+            <SubmitButton />
         </form>
         {/* 3. 客户端组件下沉：单独封装 */}
         <ClientButton onClick={addTodoWithUserId3}>Client Button</ClientButton>
@@ -41,6 +42,8 @@ export default async function ServerActionTodosPage() {
         <li key={index}>{todo}</li>
       ))}
     </ul>
+    <hr className="border" />
+    <SubmitForm />
   </div>;
 }
 

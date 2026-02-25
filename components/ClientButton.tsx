@@ -10,7 +10,6 @@ export default function ClientButton(props: React.ComponentProps<"button"> ) {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (props.onClick) {
             startTransition(async () => {
-                await new Promise(resolve => setTimeout(resolve, 3000))
                 // @ts-expect-error - props.onClick might be an async Server Action
                 await props.onClick(e);
             });

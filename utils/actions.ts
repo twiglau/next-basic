@@ -21,6 +21,7 @@ export async function getTodo() {
 }
 export async function addTodo(userId: string, formData: FormData) {
   console.log("userID:", userId);
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   // 1. FormData to Object
   const rawData = Object.fromEntries(formData);
@@ -95,6 +96,7 @@ export type VenueActionType = Omit<
 > & {
   state: Omit<StatesType, "_id" | "createdAt" | "updatedAt"> | null;
 };
+
 export async function getVenus(): Promise<VenueActionType[]> {
   try {
     await connectionDb();
