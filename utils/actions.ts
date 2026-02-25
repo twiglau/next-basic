@@ -14,6 +14,20 @@ import { schemeValidate } from "@/app/dashboard/venue/validate";
 import { format } from "date-fns";
 import { EventsType, Events } from "@/server/db/models/events";
 
+const todoData: string[] = ["打球", "看书", "写代码"];
+
+export async function getTodo() {
+  return todoData;
+}
+export async function addTodo(userId: string, formData: FormData) {
+  console.log("userID:", userId);
+
+  // 1. FormData to Object
+  const rawData = Object.fromEntries(formData);
+  todoData.push(rawData.todo as string);
+  revalidatePath("/server_action_todos");
+}
+
 export async function getEvents(limit: number = 10, skip: number = 0) {
   try {
     await connectionDb();
