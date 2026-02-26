@@ -11,3 +11,17 @@ const loggedMiddleware = t.middleware(async ({ next, ctx }) => {
   console.log(`[DEBUG] api time: ${duration}ms`);
   return result;
 });
+
+const withLoggerProcedure = procedure.use(loggedMiddleware);
+const withSnippetProcedure = withLoggerProcedure.use(async ({ ctx, next }) => {
+  return next({
+    ctx: {
+      snippet: {
+        name: "Custom",
+        value: "Key",
+      },
+    },
+  });
+});
+
+export { router, withSnippetProcedure };
