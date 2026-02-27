@@ -61,4 +61,24 @@ export const snippetRouter = router({
         throw error;
       }
     }),
+  update: withSnippetProcedure
+    .input(snippetSchema)
+    .mutation(async ({ input }) => {
+      try {
+        const { title, content, id } = input;
+        const result = await prisma.snippets.update({
+          where: {
+            id: Number(id),
+          },
+          data: {
+            title,
+            content,
+          },
+        });
+        return result;
+      } catch (error) {
+        console.error("[ERROR] snippet.update failed:", error);
+        throw error;
+      }
+    }),
 });

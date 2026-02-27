@@ -24,3 +24,11 @@ export default async function SnippetDetailPage({ params }: { params: Promise<{ 
         </div>
     )
 }
+
+
+export async function generateStaticParams() {
+    const snippets = await trpcServerCaller({}).snippet.lists()
+    return snippets.map((snippet) => ({
+        id: snippet.id.toString(),
+    }))
+}
